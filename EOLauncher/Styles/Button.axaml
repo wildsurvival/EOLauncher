@@ -1,0 +1,23 @@
+﻿<Styles xmlns="https://github.com/avaloniaui" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+	<Style Selector="Button.GridActionButton">
+		<Setter Property="Height" Value="36" />
+		<Setter Property="Padding" Value="10,0,10,0" />
+		<Setter Property="HorizontalAlignment" Value="Stretch" />
+		<Setter Property="Foreground" Value="{DynamicResource SuccessColor}" />
+		<Setter Property="BorderBrush" Value="{DynamicResource SuccessColor}" />
+		<Setter Property="BorderThickness" Value="1" />
+
+		<Style Selector="^:pointerover">
+			<Setter Property="Background" Value="{DynamicResource SuccessColor}" />
+			<Setter Property="Foreground" Value="{DynamicResource ThemeBackgroundBrush}" />
+		</Style>
+
+		<Style Selector="^:pointerover Panel.RootPanel Border#PART_HoverBackground">
+			<Setter Property="Background" Value="{DynamicResource SuccessColor}" />
+		</Style>
+		
+		<Style Selector="^ /template/ Border#PART_HoverBackground">
+			<Setter Property="Background" Value="{DynamicResource SuccessColor}" />
+		</Style>
+	</Style>
+</Styles>

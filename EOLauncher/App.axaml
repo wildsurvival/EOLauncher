@@ -1,0 +1,38 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="EOLauncher.App"
+			 xmlns:app="clr-namespace:EOLauncher"
+             xmlns:themes="clr-namespace:ShadUI.Themes;assembly=ShadUI">
+	<Application.DataTemplates>
+		<app:ViewLocator />
+	</Application.DataTemplates>
+	<Application.Resources>
+		<FontFamily x:Key="ManropeFont">avares://EOLauncher/Assets/Fonts#Manrope</FontFamily>
+		<FontFamily x:Key="LucideIcon">avares://EOLauncher/Assets/Fonts#lucide</FontFamily>
+		<x:Double x:Key="ControlContentThemeFontSize">12</x:Double>
+	</Application.Resources>
+	<Application.Styles>
+		<themes:ShadTheme />
+
+		<Style Selector="HyperlinkButton.hlcolumn">
+			<Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
+
+			<Style Selector="^:pointerover">
+				<Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
+				<Setter Property="Background" Value="Transparent"/>
+			</Style>
+
+			<Style Selector="^:visited">
+				<Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />
+				<Setter Property="Background" Value="Transparent"/>
+			</Style>
+			
+			<Style Selector="^.HasWebsite">
+				<Setter Property="Foreground" Value="{DynamicResource InfoColor}" />
+			</Style>
+		</Style>
+
+		<StyleInclude Source="avares://EOLauncher/Styles/Button.axaml" />
+		<StyleInclude Source="avares://EOLauncher/Styles/TextBlock.axaml" />
+	</Application.Styles>
+</Application>

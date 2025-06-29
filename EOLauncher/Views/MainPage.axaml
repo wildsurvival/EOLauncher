@@ -1,0 +1,71 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:EOLauncher.ViewModels"
+			 xmlns:models="clr-namespace:EOLauncher.Models"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="EOLauncher.Views.MainPage"
+			 x:DataType="vm:MainViewModel"
+			 xmlns:avalonia_controls="using:Avalonia.Controls"
+			 xmlns:extensions="clr-namespace:ShadUI.Extensions;assembly=ShadUI"
+			 Margin="10">
+	
+	<DockPanel VerticalAlignment="Stretch" LastChildFill="True">
+		<Grid DockPanel.Dock="Bottom" Margin="0, 7, 0, 0">
+			<StackPanel HorizontalAlignment="Stretch" Orientation="Horizontal" Spacing="2">
+				<Label Padding="2" FontSize="11" VerticalAlignment="Center">Server Lists</Label>
+				<HyperlinkButton
+					Padding="2"
+					FontSize="11"
+					Content="www.apollo-games.com/SLN"
+					NavigateUri="https://www.apollo-games.com/SLN" />
+			</StackPanel>
+
+			<StackPanel Spacing="6" HorizontalAlignment="Right" Orientation="Horizontal">
+				<Label Content="Select a client" FontSize="14" VerticalAlignment="Center" FontWeight="SemiBold" />
+				<ComboBox Width="160" x:Name="ClientComboBox" ItemsSource="{Binding AvailableClients}" SelectedItem="{Binding SelectedClient}" x:DataType="vm:MainViewModel" />
+				<Button Width="96" 
+						Classes="GridActionButton Download" 
+						Command="{Binding LaunchCommand}"
+						x:DataType="vm:MainViewModel" 
+						Content="Launch" 
+						VerticalAlignment="Bottom"
+						/>
+			</StackPanel>
+		</Grid>
+		
+		<DataGrid
+			Name="ServerList"
+			ItemsSource="{Binding Servers}"
+			SelectedItem="{Binding $parent.DataContext.SelectedServer, Mode=TwoWay}"
+			IsReadOnly="True"
+			GridLinesVisibility="Horizontal"
+			DockPanel.Dock="Top"
+			CanUserReorderColumns="False"
+			SelectionMode="Single"
+			VerticalScrollBarVisibility="Disabled"
+			ScrollViewer.VerticalScrollBarVisibility="Visible"
+			>
+			<DataGrid.Columns>
+				<DataGridTemplateColumn Header="Name" Width="200">
+					<DataGridTemplateColumn.CellTemplate>
+						<DataTemplate DataType="models:Server">
+							<HyperlinkButton Classes="hlcolumn"
+											 Classes.HasWebsite="{Binding HasWebsite}"
+											 Content="{Binding Name}"
+											 NavigateUri="{Binding WebsiteUrl}" x:DataType="models:Server"
+											 FontWeight="Bold"
+											 >
+							</HyperlinkButton>
+						</DataTemplate>
+					</DataGridTemplateColumn.CellTemplate>
+				</DataGridTemplateColumn>
+				<DataGridTextColumn Header="Host" Binding="{Binding Host}" x:DataType="models:Server" />
+				<DataGridTextColumn Header="Port" Binding="{Binding Port}" x:DataType="models:Server" />
+				<DataGridTextColumn Header="Players" Binding="{Binding Players}" x:DataType="models:Server" />
+				<DataGridTextColumn Header="Version" Binding="{Binding Version}" x:DataType="models:Server" />
+			</DataGrid.Columns>
+		</DataGrid>
+	</DockPanel>
+</UserControl>

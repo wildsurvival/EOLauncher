@@ -1,0 +1,113 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+			 xmlns:vm="clr-namespace:EOLauncher.ViewModels"
+			 xmlns:models="clr-namespace:EOLauncher.Models"
+			 xmlns:controls="clr-namespace:EOLauncher.Controls"
+			 xmlns:converters="clr-namespace:EOLauncher.Converters"
+			 xmlns:ext="clr-namespace:EOLauncher.Extensions"
+			 x:DataType="vm:SettingsViewModel"
+			 xmlns:avalonia_controls="using:Avalonia.Controls"
+			 xmlns:shadui="clr-namespace:ShadUI.Controls;assembly=ShadUI"
+			 xmlns:extensions="clr-namespace:ShadUI.Extensions;assembly=ShadUI"
+             x:Class="EOLauncher.Views.SettingsPage"
+			 x:Name="SettingsPageCtrl"
+			 Margin="10">
+	<UserControl.Resources>
+		<converters:EnumDescriptionConverter x:Key="EnumConverter" />
+	</UserControl.Resources>
+	<shadui:Card
+		Margin="4"
+		HorizontalAlignment="Stretch"
+		VerticalAlignment="Top"
+		>
+		<shadui:Card.Header>
+			<StackPanel>
+				<shadui:CardTitle>Clients</shadui:CardTitle>
+				<shadui:CardDescription>Configure the client options</shadui:CardDescription>
+			</StackPanel>
+		</shadui:Card.Header>
+
+		<StackPanel>
+			<DataGrid
+				ItemsSource="{Binding Clients}"
+				x:Name="ClientList">
+				<DataGrid.Columns>
+					<DataGridTextColumn Header="Name" Binding="{Binding Name}" x:DataType="models:Client" />
+					<DataGridTextColumn Header="Location" Binding="{Binding Location}" x:DataType="models:Client" Width="*" />
+					<DataGridTemplateColumn Header="Version">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<controls:VersionTextBox Text="{Binding Version}" x:DataType="models:Client"/>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+					<DataGridTemplateColumn Header="Comparison">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<ComboBox ItemsSource="{Binding VersionComparisonOptions}" SelectedItem="{Binding Comparison}" x:DataType="models:Client">
+									<ComboBox.ItemTemplate>
+										<DataTemplate>
+											<TextBlock Text="{Binding Converter={StaticResource EnumConverter}}"/>
+										</DataTemplate>
+									</ComboBox.ItemTemplate>
+								</ComboBox>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+					<DataGridTemplateColumn Header="Custom Client">
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<CheckBox IsChecked="{Binding IgnoreClientWarning}"/>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+					<DataGridTemplateColumn>
+						<DataGridTemplateColumn.CellTemplate>
+							<DataTemplate>
+								<Button
+									Width="30"
+									Height="30"
+									Command="{Binding #SettingsPageCtrl.DataContext.RemoveClientCommand}"
+									CommandParameter="{Binding }"
+									Background="{DynamicResource SidebarBackgroundColor}"
+									CornerRadius="{DynamicResource MdCornerRadius}"
+									ToolTip.Tip="Delete row">
+									<TextBlock Classes="LucideIcon" Text="&#xe18e;" />
+								</Button>
+							</DataTemplate>
+						</DataGridTemplateColumn.CellTemplate>
+					</DataGridTemplateColumn>
+				</DataGrid.Columns>
+			</DataGrid>
+
+			<StackPanel Margin="0,10,0,0" HorizontalAlignment="Stretch" Orientation="Horizontal" FlowDirection="RightToLeft">
+				<Button
+					Width="30"
+					Height="30"
+					Command="{Binding AddNewClientCommand}"
+					Background="{DynamicResource SidebarBackgroundColor}"
+					CornerRadius="{DynamicResource MdCornerRadius}"
+					x:DataType="vm:SettingsViewModel"
+					ToolTip.Tip="Add new row">
+					<TextBlock Classes="LucideIcon" Text="&#xe141;" />
+				</Button>
+			</StackPanel>
+			<StackPanel Margin="0,10,0,0" HorizontalAlignment="Stretch" Orientation="Horizontal" FlowDirection="RightToLeft">
+				<Button
+					Width="96"
+					Height="36"
+					Command="{Binding SaveClientsCommand}"
+					Background="{DynamicResource SuccessColor}"
+					Foreground="{DynamicResource ThemeBackgroundBrush}"
+					CornerRadius="{DynamicResource MdCornerRadius}"
+					x:DataType="vm:SettingsViewModel"
+					Content="Save">
+				</Button>
+			</StackPanel>
+		</StackPanel>
+		
+		</shadui:Card>
+</UserControl>

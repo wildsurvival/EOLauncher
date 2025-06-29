@@ -1,0 +1,70 @@
+<controls:Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:vm="using:EOLauncher.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:app="clr-namespace:EOLauncher"
+		xmlns:views="clr-namespace:EOLauncher.Views"
+		xmlns:converters="clr-namespace:EOLauncher.Converters"
+		xmlns:shadui="clr-namespace:ShadUI;assembly=ShadUI"
+		xmlns:contents="clr-namespace:ShadUI.Contents;assembly=ShadUI"
+		xmlns:controls="clr-namespace:ShadUI.Controls;assembly=ShadUI"
+		xmlns:dialogs="clr-namespace:ShadUI.Dialogs;assembly=ShadUI"
+		xmlns:themes="clr-namespace:ShadUI.Themes;assembly=ShadUI"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		x:DataType="app:MainWindowViewModel"
+        x:Class="EOLauncher.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+		TitleFontWeight="SemiBold"
+        Title="EOLauncher"
+		FontFamily="{StaticResource ManropeFont}">
+	<controls:Window.Hosts>
+		<dialogs:DialogHost Manager="{Binding DialogManager}"
+							Owner="{Binding RelativeSource={RelativeSource AncestorType=controls:Window}}" />
+	</controls:Window.Hosts>
+	<controls:Window.RightWindowTitleBarControls>
+		<Button
+            Width="30"
+            Height="30"
+            Background="{DynamicResource SidebarBackgroundColor}"
+            Command="{Binding SwitchThemeCommand}"
+            CornerRadius="{DynamicResource MdCornerRadius}"
+            ToolTip.Tip="Switch Theme">
+			<TextBlock Classes="LucideIcon" Text="{Binding CurrentTheme, Converter={x:Static converters:ThemeModeConverters.ToLucideIcon}}" />
+		</Button>
+	</controls:Window.RightWindowTitleBarControls>
+
+	<controls:SidebarMenu OpenPaneLength="210">
+		<controls:SidebarMenu.BodyContent>
+			<TransitioningContentControl Content="{Binding SelectedPage}" />
+		</controls:SidebarMenu.BodyContent>
+		<controls:SidebarMenu.Items>
+			<controls:SidebarMenuItem
+				Classes="Compact"
+				Command="{Binding OpenMainCommand}"
+				Header="Server List"
+				ToolTip.Tip="{Binding IsMenuExpanded, RelativeSource={RelativeSource AncestorType=controls:SidebarMenu}, Converter={x:Static converters:BooleanToNullOrStringConverter.Instance}, ConverterParameter='Server List'}">
+							<controls:SidebarMenuItem.Icon>
+								<TextBlock Classes="LucideIcon" Text="&#xe0ec;" />
+							</controls:SidebarMenuItem.Icon>
+			</controls:SidebarMenuItem>
+			<controls:SidebarMenuItem
+				Classes="Compact"
+				Header="My Servers"
+				ToolTip.Tip="{Binding IsMenuExpanded, RelativeSource={RelativeSource AncestorType=controls:SidebarMenu}, Converter={x:Static converters:BooleanToNullOrStringConverter.Instance}, ConverterParameter='My Servers'}">
+				<controls:SidebarMenuItem.Icon>
+					<TextBlock Classes="LucideIcon" Text="&#xe1d9;" />
+				</controls:SidebarMenuItem.Icon>
+			</controls:SidebarMenuItem>
+			<controls:SidebarMenuItem
+				Classes="Compact"
+				Command="{Binding OpenSettingsCommand}"
+				Header="Settings"
+				ToolTip.Tip="{Binding IsMenuExpanded, RelativeSource={RelativeSource AncestorType=controls:SidebarMenu}, Converter={x:Static converters:BooleanToNullOrStringConverter.Instance}, ConverterParameter='Settings'}">
+				<controls:SidebarMenuItem.Icon>
+					<TextBlock Classes="LucideIcon" Text="&#xe30b;" />
+				</controls:SidebarMenuItem.Icon>
+			</controls:SidebarMenuItem>
+		</controls:SidebarMenu.Items>
+	</controls:SidebarMenu>
+</controls:Window>
