@@ -68,45 +68,41 @@ namespace EOLauncher.ViewModels
         [RelayCommand]
         public void Launch()
         {
-            if (SelectedServer != null)
+            var server = SelectedServer;
+            var client = GetSelectedClient();
+            if (server != null && client != null)
             {
-                var server = SelectedServer;
-                var client = GetSelectedClient();
 
-                if (client != null)
+                if (server.ClientUrl != null && !client.IgnoreClientWarning && !string.IsNullOrEmpty(server.ClientUrl?.ToString()))
                 {
-                    if (server.ClientUrl != null && !client.IgnoreClientWarning && !string.IsNullOrEmpty(server.ClientUrl?.ToString()))
-                    {
-                        _dialogManager.CreateDialog(
-                            "Are you sure?",
-                            $"{server.Name} has provided a client link. You may want to download it.")
-                        .WithPrimaryButton("Continue", OnSubmit)
-                        .WithCancelButton("Cancel")
-                        .WithMaxWidth(512)
-                        .Dismissible()
-                        .Show();
-                    }
-
-                    OnSubmit();
+                    _dialogManager.CreateDialog(
+                        "Are you sure?",
+                        $"{server.Name} has provided a client link. You may want to download it.")
+                    .WithPrimaryButton("Continue", () => OnSubmit(server, client))
+                    .WithCancelButton("Cancel")
+                    .WithMaxWidth(512)
+                    .Dismissible()
+                    .Show();
+                }
+                else
+                {
+                    OnSubmit(server, client);
                 }
             }
         }
 
-        private void OnSubmit()
+        private void OnSubmit(Server server, Client client)
         {
-            var server = SelectedServer;
-            var client = GetSelectedClient();
-
             if (Path.Exists(client?.Location))
             {
                 var config = Path.Combine(client.Location, "config/setup.ini");
-                List<string> names = ["Endless.exe", "endless.exe"];
+                List<string> names = ["Endless.exe"];
 
                 DirectoryInfo info = new(client.Location);
                 FileInfo? file = info.GetFiles().FirstOrDefault(f => names.Contains(f.Name, StringComparer.OrdinalIgnoreCase));
                 if (file != null && File.Exists(config))
                 {
-                    // TODO: Work on this so we aren't reading the whole file every time
+                    // TODO: Work on this so we aren't reading the whole file every time and reformatting it
                     IniReader ini = new IniReader(config);
                     ini.Load();
                     ini.SetValue("CONNECTION", "Host", server.Host);
