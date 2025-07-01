@@ -10,7 +10,7 @@
 			 xmlns:ext="clr-namespace:EOLauncher.Extensions"
 			 x:DataType="vm:SettingsViewModel"
 			 xmlns:avalonia_controls="using:Avalonia.Controls"
-			 xmlns:shadui="clr-namespace:ShadUI.Controls;assembly=ShadUI"
+			 xmlns:shadui="clr-namespace:ShadUI;assembly=ShadUI"
 			 xmlns:extensions="clr-namespace:ShadUI.Extensions;assembly=ShadUI"
              x:Class="EOLauncher.Views.SettingsPage"
 			 x:Name="SettingsPageCtrl"

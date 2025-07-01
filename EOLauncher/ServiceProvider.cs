@@ -1,9 +1,8 @@
 ﻿using Avalonia;
 using Jab;
-using ShadUI.Themes;
+using ShadUI;
 using EOLauncher.ViewModels;
 using EOLauncher.Configuration;
-using ShadUI.Dialogs;
 
 namespace EOLauncher
 {

@@ -1,4 +1,4 @@
-﻿using ShadUI.Controls;
+﻿using ShadUI;
 
 namespace EOLauncher.Views;
 

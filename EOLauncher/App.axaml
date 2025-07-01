@@ -2,7 +2,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="EOLauncher.App"
 			 xmlns:app="clr-namespace:EOLauncher"
-             xmlns:themes="clr-namespace:ShadUI.Themes;assembly=ShadUI">
+			 xmlns:shadui="clr-namespace:ShadUI;assembly=ShadUI">
 	<Application.DataTemplates>
 		<app:ViewLocator />
 	</Application.DataTemplates>
@@ -12,7 +12,7 @@
 		<x:Double x:Key="ControlContentThemeFontSize">12</x:Double>
 	</Application.Resources>
 	<Application.Styles>
-		<themes:ShadTheme />
+		<shadui:ShadTheme />
 
 		<Style Selector="HyperlinkButton.hlcolumn">
 			<Setter Property="Foreground" Value="{DynamicResource ThemeForegroundBrush}" />

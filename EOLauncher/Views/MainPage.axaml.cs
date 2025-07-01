@@ -3,13 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Interactivity;
 using EOLauncher.Models;
 using EOLauncher.ViewModels;
-using ShadUI.Breakpoints;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Reflection.Metadata.Ecma335;
-using System.Security.Cryptography.X509Certificates;
-using System.Text.Json;
 
 namespace EOLauncher.Views;
 

@@ -2,8 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using EOLauncher.Configuration;
 using EOLauncher.Models;
-using ShadUI.Dialogs;
-using ShadUI.Themes;
+using ShadUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

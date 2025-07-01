@@ -2,10 +2,8 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-using EOLauncher.ViewModels;
 using EOLauncher.Views;
-using ShadUI.Dialogs;
-using ShadUI.Themes;
+using ShadUI;
 using System.Linq;
 
 namespace EOLauncher;

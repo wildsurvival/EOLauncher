@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\shad-ui\src\ShadUI\ShadUI.csproj" />
+    <ProjectReference Include="..\..\shad-ui-datagrid-grouping\src\ShadUI\ShadUI.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,19 +1,16 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using EOLauncher.ViewModels;
-using ShadUI.Dialogs;
-using ShadUI.Themes;
-using ShadUI.Toasts;
-using Splat;
-using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
+using ShadUI;
 using System.Threading.Tasks;
 
 namespace EOLauncher;
 
 public sealed partial class MainWindowViewModel(ThemeWatcher themeWatcher, MainViewModel mainViewModel, SettingsViewModel settingsViewModel, DialogManager dialogManager) : ViewModelBase
 {
+    [ObservableProperty]
+    private string _currentRoute = "Dashboard";
+
     [ObservableProperty]
     private DialogManager _dialogManager = dialogManager;
 

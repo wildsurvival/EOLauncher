@@ -1,16 +1,12 @@
-<controls:Window xmlns="https://github.com/avaloniaui"
+<shadui:Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-		xmlns:vm="using:EOLauncher.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:app="clr-namespace:EOLauncher"
 		xmlns:views="clr-namespace:EOLauncher.Views"
+	    xmlns:vm="using:EOLauncher.ViewModels"
 		xmlns:converters="clr-namespace:EOLauncher.Converters"
 		xmlns:shadui="clr-namespace:ShadUI;assembly=ShadUI"
-		xmlns:contents="clr-namespace:ShadUI.Contents;assembly=ShadUI"
-		xmlns:controls="clr-namespace:ShadUI.Controls;assembly=ShadUI"
-		xmlns:dialogs="clr-namespace:ShadUI.Dialogs;assembly=ShadUI"
-		xmlns:themes="clr-namespace:ShadUI.Themes;assembly=ShadUI"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
 		x:DataType="app:MainWindowViewModel"
         x:Class="EOLauncher.Views.MainWindow"
@@ -18,11 +14,11 @@
 		TitleFontWeight="SemiBold"
         Title="EOLauncher"
 		FontFamily="{StaticResource ManropeFont}">
-	<controls:Window.Hosts>
-		<dialogs:DialogHost Manager="{Binding DialogManager}"
-							Owner="{Binding RelativeSource={RelativeSource AncestorType=controls:Window}}" />
-	</controls:Window.Hosts>
-	<controls:Window.RightWindowTitleBarControls>
+	<shadui:Window.Hosts>
+		<shadui:DialogHost Manager="{Binding DialogManager}"
+							Owner="{Binding RelativeSource={RelativeSource AncestorType=shadui:Window}}" />
+	</shadui:Window.Hosts>
+	<shadui:Window.RightWindowTitleBarContent>
 		<Button
             Width="30"
             Height="30"
@@ -32,39 +28,67 @@
             ToolTip.Tip="Switch Theme">
 			<TextBlock Classes="LucideIcon" Text="{Binding CurrentTheme, Converter={x:Static converters:ThemeModeConverters.ToLucideIcon}}" />
 		</Button>
-	</controls:Window.RightWindowTitleBarControls>
+	</shadui:Window.RightWindowTitleBarContent>
 
-	<controls:SidebarMenu OpenPaneLength="210">
-		<controls:SidebarMenu.BodyContent>
-			<TransitioningContentControl Content="{Binding SelectedPage}" />
-		</controls:SidebarMenu.BodyContent>
-		<controls:SidebarMenu.Items>
-			<controls:SidebarMenuItem
-				Classes="Compact"
-				Command="{Binding OpenMainCommand}"
-				Header="Server List"
-				ToolTip.Tip="{Binding IsMenuExpanded, RelativeSource={RelativeSource AncestorType=controls:SidebarMenu}, Converter={x:Static converters:BooleanToNullOrStringConverter.Instance}, ConverterParameter='Server List'}">
-							<controls:SidebarMenuItem.Icon>
-								<TextBlock Classes="LucideIcon" Text="&#xe0ec;" />
-							</controls:SidebarMenuItem.Icon>
-			</controls:SidebarMenuItem>
-			<controls:SidebarMenuItem
-				Classes="Compact"
-				Header="My Servers"
-				ToolTip.Tip="{Binding IsMenuExpanded, RelativeSource={RelativeSource AncestorType=controls:SidebarMenu}, Converter={x:Static converters:BooleanToNullOrStringConverter.Instance}, ConverterParameter='My Servers'}">
-				<controls:SidebarMenuItem.Icon>
-					<TextBlock Classes="LucideIcon" Text="&#xe1d9;" />
-				</controls:SidebarMenuItem.Icon>
-			</controls:SidebarMenuItem>
-			<controls:SidebarMenuItem
-				Classes="Compact"
-				Command="{Binding OpenSettingsCommand}"
-				Header="Settings"
-				ToolTip.Tip="{Binding IsMenuExpanded, RelativeSource={RelativeSource AncestorType=controls:SidebarMenu}, Converter={x:Static converters:BooleanToNullOrStringConverter.Instance}, ConverterParameter='Settings'}">
-				<controls:SidebarMenuItem.Icon>
-					<TextBlock Classes="LucideIcon" Text="&#xe30b;" />
-				</controls:SidebarMenuItem.Icon>
-			</controls:SidebarMenuItem>
-		</controls:SidebarMenu.Items>
-	</controls:SidebarMenu>
-</controls:Window>
+	<Panel>
+		<Grid ColumnDefinitions="Auto *">
+			<shadui:Sidebar 
+				Grid.Column="0"
+				Width="210" 
+				MinWidth="60"
+                Padding="{Binding #Toggler.IsChecked, Converter={x:Static converters:BooleanConverters.SidebarPadding}}"
+                BorderBrush="{DynamicResource BorderColor30}"
+                BorderThickness="0,0,1,0"
+                CurrentRoute="{Binding CurrentRoute}"
+                Expanded="{Binding #Toggler.IsChecked}">
+				<shadui:Sidebar.ExpandEasing>
+					<shadui:EaseInOutBack BounceIntensity="Strong" />
+				</shadui:Sidebar.ExpandEasing>
+				<shadui:Sidebar.Header>
+					<ToggleButton
+                        Name="Toggler"
+                        Width="32"
+                        Height="32"
+                        Padding="8"
+                        HorizontalAlignment="{Binding #Toggler.IsChecked, Converter={x:Static converters:BooleanConverters.SidebarTogglerHorizontalAlignment}}"
+                        CornerRadius="{DynamicResource LgCornerRadius}"
+                        Theme="{DynamicResource SideTogglerTheme}">
+						<Viewbox>
+							<TextBlock Classes="LucideIcon" Text="&#57646;" />
+						</Viewbox>
+					</ToggleButton>
+				</shadui:Sidebar.Header>
+				<StackPanel Spacing="4">
+					<shadui:SidebarItem
+						Classes="Compact"
+						Command="{Binding OpenMainCommand}"
+						Content="Server List"
+						ToolTip.Tip="{Binding $parent[shadui:Sidebar].Expanded, Converter={x:Static converters:BooleanConverters.NullOrString}, ConverterParameter='CheckBox'}">
+						<shadui:SidebarItem.Icon>
+							<TextBlock Classes="LucideIcon" Text="&#xe0ec;" />
+						</shadui:SidebarItem.Icon>
+					</shadui:SidebarItem>
+					<shadui:SidebarItem
+						Classes="Compact"
+						Content="My Servers"
+						ToolTip.Tip="{Binding $parent[shadui:Sidebar].Expanded, Converter={x:Static converters:BooleanConverters.NullOrString}, ConverterParameter='CheckBox'}">
+						<shadui:SidebarItem.Icon>
+							<TextBlock Classes="LucideIcon" Text="&#xe1d9;" />
+						</shadui:SidebarItem.Icon>
+					</shadui:SidebarItem>
+					<shadui:SidebarItem
+						Classes="Compact"
+						Command="{Binding OpenSettingsCommand}"
+						Content="Settings"
+						ToolTip.Tip="{Binding $parent[shadui:Sidebar].Expanded, Converter={x:Static converters:BooleanConverters.NullOrString}, ConverterParameter='CheckBox'}">
+						<shadui:SidebarItem.Icon>
+							<TextBlock Classes="LucideIcon" Text="&#xe30b;" />
+						</shadui:SidebarItem.Icon>
+					</shadui:SidebarItem>
+				</StackPanel>
+			</shadui:Sidebar>
+			
+			<TransitioningContentControl Grid.Column="1" Content="{Binding SelectedPage}" />
+		</Grid>
+	</Panel>
+</shadui:Window>
