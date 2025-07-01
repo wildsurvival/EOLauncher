@@ -3,6 +3,7 @@ using Avalonia.Media;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -38,28 +39,21 @@ namespace EOLauncher.Models
         {
             get
             {
-                return string.IsNullOrEmpty(_zone) ? "public" : _zone.ToLower();
+                TextInfo ti = new CultureInfo("en-US", false).TextInfo;
+
+                return ti.ToTitleCase(string.IsNullOrEmpty(_zone) ? "public" : _zone);
             }
-            set
-            {
-                _zone = value;
-            }
+            set => _zone = value;
         }
 
         public bool HasWebsite
         {
-            get
-            {
-                return string.IsNullOrEmpty(WebsiteUrl?.ToString()) == false;
-            }
+            get => string.IsNullOrEmpty(WebsiteUrl?.ToString()) == false;
         }
 
         public bool HasClientDownload
         {
-            get
-            {
-                return string.IsNullOrEmpty(ClientUrl?.ToString()) == false;
-            }
+            get => string.IsNullOrEmpty(ClientUrl?.ToString()) == false;
         }
     }
 }

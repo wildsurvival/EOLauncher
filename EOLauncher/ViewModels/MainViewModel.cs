@@ -55,9 +55,7 @@ namespace EOLauncher.ViewModels
             }
 
             var servers = new ObservableCollection<Server>(list);
-
             var serverView = new DataGridCollectionView(servers);
-
             var groupDescription = new DataGridPathGroupDescription("Zone");
             serverView.GroupDescriptions.Add(groupDescription);
 
